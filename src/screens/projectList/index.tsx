@@ -5,25 +5,24 @@ import { clearObject } from "utils/index";
 import { List } from "./list";
 import { SearchPanel } from "./searchPanel";
 const apiURL = process.env.REACT_APP_URL;
-console.log(apiURL);
 export const ProjectListScreen = () => {
-  const [list, setList] = useState([]);
+  const [users, setUsers] = useState([]);
   const [param, setParam] = useState({
     name: "",
     personId: "",
   });
-  const [users, setUsers] = useState([]);
-  const debounceParam = useDebounce(param, 2000);
+  const debouncedParam = useDebounce(param, 2000);
+  const [list, setList] = useState([]);
   //获取项目列表接口代码
   useEffect(() => {
     fetch(
-      `${apiURL}/projects?${qs.stringify(clearObject(debounceParam))}`
+      `${apiURL}/projects?${qs.stringify(clearObject(debouncedParam))}`
     ).then(async (response) => {
       if (response.ok) {
         setList(await response.json());
       }
     });
-  }, [debounceParam]);
+  }, [debouncedParam]);
   //获取负责人
   useMount(() => {
     fetch(`${apiURL}/users?${qs.stringify(clearObject(param))}`).then(
