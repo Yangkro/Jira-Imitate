@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { ProjectListScreen } from "screens/projectList";
+// import HomeWork1 from "homework/home-1";
 function App() {
   return (
     <div className="App">
