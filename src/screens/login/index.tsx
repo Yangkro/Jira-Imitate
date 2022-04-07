@@ -1,5 +1,5 @@
 import React from "react";
-const apiUrl = process.env.REACT_APP_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 export const LoginScreen = () => {
   const login = (param: { username: string; password: string }) => {
     fetch(`${apiUrl}/login`, {

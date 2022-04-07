@@ -4,7 +4,7 @@ import { useMount, useDebounce } from "hooks";
 import { clearObject } from "utils/index";
 import { List } from "./list";
 import { SearchPanel } from "./searchPanel";
-const apiURL = process.env.REACT_APP_URL;
+const apiURL = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
   const [param, setParam] = useState({
