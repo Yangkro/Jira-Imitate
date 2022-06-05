@@ -8,8 +8,8 @@
  */
 import { useAuth } from "context/authContext";
 import React from "react";
-export const LoginScreen = () => {
-  const { login, user } = useAuth();
+export const RegisterScreen = () => {
+  const { register, user } = useAuth();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //event默认是Element类型，但是默认的Element类型上是没有currentTarget.elements的所以需要用as关键字告诉TS类型检测，我知道这个是HTMLInputElement类型
@@ -17,7 +17,7 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+    register({ username, password });
   };
   //为啥鼠标悬浮上去的不是React.FormEvent
   return (
