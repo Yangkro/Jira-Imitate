@@ -7,7 +7,7 @@ export const UnAuthenticatedApp = ()=>{
     return (
         <div>
             {isRegister? <LoginScreen/>:<RegisterScreen />}
-            <button onClick={()=>setIsRegister(!isRegister)}>{`切换到${isRegister}?'登录':'注册'`}</button>
+            <button onClick={()=>setIsRegister(!isRegister)}>切换到{isRegister?'登录':'注册'}</button>
         </div>
     )
 }
