@@ -1,4 +1,5 @@
 import { useMount } from "hooks";
+import { type } from "os";
 import React, { useState, ReactNode } from "react";
 import { User } from "screens/projectList/searchPanel";
 import { http } from "utils/http";
@@ -11,15 +12,15 @@ export interface AuthForm {
  * @description 登录持久化
  * @returns Promise(user)
  */
-const bootstrapUser = async()=>{
-  let user = null
-  const token = auth.getToken()
-  if(token){
-    const data = await http('me', {token})
-    user = data.user
+const bootstrapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await http("me", { token });
+    user = data.user;
   }
-  return user
-}
+  return user;
+};
 const AuthContext = React.createContext<
   | {
       user: User | null;
@@ -29,17 +30,23 @@ const AuthContext = React.createContext<
     }
   | undefined
 >(undefined);
+//displayName在实际开发中没有用，主要是用在devtools里面
 AuthContext.displayName = "AuthContext";
 
+/**
+ *
+ * @param param0 React.Node
+ * @returns
+ */
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   //函数式编程point free： user=> setUser(user) === setUser
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
-  useMount(()=>{
-    bootstrapUser().then(setUser)
-  })
+  useMount(() => {
+    bootstrapUser().then(setUser);
+  });
   // Please use tsx instead of ts it has some minute differences. tsx obviously allows the usage of jsx tags inside typescript.
   return (
     <AuthContext.Provider
