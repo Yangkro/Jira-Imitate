@@ -1,11 +1,20 @@
 import qs from 'qs'
 import * as auth from 'auth-provider'
 import { useAuth } from 'context/authContext';
+import { config } from 'process';
+import { stringify } from 'querystring';
 const apiUrl = process.env.REACT_APP_API_URL;
 interface Config extends RequestInit {
     token?:string
     data?:object
 }
+
+/**
+ * @description 对fetch方法的封装
+ * @param url 请求路径
+ * @param param1 请求参数
+ * @returns Promise
+ */
 export const http = async(url:string, {data, token, headers, ...customConfig}:Config = {})=>{
     const config = {
         method:'GET',
@@ -42,11 +51,16 @@ export const http = async(url:string, {data, token, headers, ...customConfig}:Co
     })
 }
 
+/**
+ * @description 封装一个携带token的请求方法
+ * 因为需要用全局的user信息，需要使用useAuth hook，所以函数本身也得是个hook
+ * @returns 请求方法，方法携带token
+ */
 export const useHttp =()=>{
     //封装一个自带token的hook
     const {user} = useAuth()
     //下面这个返回的函数是俩参数不是一个哦
-    return (...[url, config]:Parameters<typeof http>)=>{
-        return http(url, {...config, token: user?.token})
-    }
+    //Parameters 使用已有变量的类型作为新变量的类型，相当于这种写法
+    return (...[url, config]:Parameters<typeof http>)=>  http(url, {...config, token: user?.token})
+    // return ([url, config]:[string, Config])=> http(url, {...config, token:user?.token})
 }

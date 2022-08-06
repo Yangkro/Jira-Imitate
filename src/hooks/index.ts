@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { setTimeout } from "timers";
 
 //该文件为用户的自定义hooks
+/**
+ * 
+ * @param callback 
+ */
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();

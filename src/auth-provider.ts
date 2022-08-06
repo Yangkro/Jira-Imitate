@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2022-04-09 22:00:49
- * @LastEditTime: 2022-04-09 23:01:36
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \jira-imitate\src\auth-provider.ts
- */
 //可以了解一下firebase等第三方auth服务
 /**
  * 登录服务
@@ -13,11 +5,27 @@
 import { User } from "screens/projectList/searchPanel";
 const apiUrl = process.env.REACT_APP_API_URL;
 const localStorageKey = "__auth_provider_token__";
+/**
+ * 
+ * @returns 登录token
+ */
 export const getToken = () => window.localStorage.getItem(localStorageKey);
+
+/**
+ * @description 处理登录/注册后的用户信息
+ * @param param0 user 用户信息
+ * @returns 用户信息
+ */
 export const handleUserResponse = ({ user }: { user: User }) => {
   window.localStorage.setItem(localStorageKey, user.token || "");
   return user;
 };
+
+/**
+ * 
+ * @param data 登录信息，账号&密码
+ * @returns 用户信息
+ */
 export const login = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/login`, {
     method: "post",
@@ -33,6 +41,12 @@ export const login = (data: { username: string; password: string }) => {
     }
   });
 };
+
+/**
+ * @description 注册
+ * @param data 账号&密码
+ * @returns 用户信息
+ */
 export const register = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {
     method: "post",
@@ -48,6 +62,10 @@ export const register = (data: { username: string; password: string }) => {
     }
   });
 };
+
+/**
+ * @description 登出
+ */
 export const logout = async () => {
   window.localStorage.removeItem(localStorageKey);
 };

@@ -7,6 +7,10 @@ export interface AuthForm {
   username: string;
   password: string;
 }
+/**
+ * @description 登录持久化
+ * @returns Promise(user)
+ */
 const bootstrapUser = async()=>{
   let user = null
   const token = auth.getToken()
@@ -48,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth必须在AuthPorvider中使用");
+    throw new Error("useAuth必须在AuthProvider中使用");
   }
   return context;
 };
