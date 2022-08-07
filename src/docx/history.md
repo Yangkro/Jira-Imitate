@@ -61,8 +61,8 @@
   type Person = { name:string age:number }
   const xiaoming : Partial<Person> = {name: 'xiaoming'}
   const xiaofang : Partial<Person> = {age: 12}
-    const xiaoliang : Partial<Person> = {xxx:'aaaa'}
-    //本质实现是 type Partial<T> = { [P in keyof T]?: T[P] }
+  const xiaoliang : Partial<Person> = {xxx:'aaaa'}
+  //本质实现是 type Partial<T> = { [P in keyof T]?: T[P] }
   ```
   3、Omit 指定删除泛型中的类型，保留其他类型
   ```
