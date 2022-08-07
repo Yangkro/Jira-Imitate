@@ -39,13 +39,12 @@
 
   1. `type`可以定义联合类型和交叉类型，`interface`不可以
 
-
-      ```
-      let myfavorateNumber:string|number
-      let jackFavorateNumber = 7
-      type favorateNumber = string|number
-      let marryFavorateNumber: favorateNumber = '6'
-      ```
+     ```
+     let myfavorateNumber:string|number
+     let jackFavorateNumber = 7
+     type favorateNumber = string|number
+     let marryFavorateNumber: favorateNumber = '6'
+     ```
 
   2. `interface`无法实现`utility type`
      js 中的 typeof 是在 runtime 时运行的，而 ts 中的 typeof 是在编译的时候运行的，ts 的 typeof 的作用是将后面变量的参数类型返回提取出来
@@ -53,8 +52,23 @@
 - utility type
   用泛型给它传入一个其他类型，然后 utility type 对这个类型就行进行某种操作，具体操作实现可以查看 Pick Exclude 的实现
   1、 Parameters 提取泛型中的类型，并且以数组的形式返回
-  ` const aaa = (name: string, id: number)=>{ return { name, id } } type newType = Parameters<typeof aaa> `
+  ```
+  const aaa = (name: string, id: number)=>{ return { name, id } }
+  type newType = Parameters<typeof aaa>
+  ```
   2、Partial 将泛型中的类型变成可选类型，可以不传
-  ` type Person = { name:string age:number } const xiaoming : Partial<Person> = {name: 'xiaoming'} const xiaofang : Partial<Person> = {age: 12} const xiaoliang : Partial<Person> = {xxx:'aaaa'} //本质实现是 type Partial<T> = { [P in keyof T]?: T[P] } `
+  ```
+  type Person = { name:string age:number }
+  const xiaoming : Partial<Person> = {name: 'xiaoming'}
+  const xiaofang : Partial<Person> = {age: 12}
+    const xiaoliang : Partial<Person> = {xxx:'aaaa'}
+    //本质实现是 type Partial<T> = { [P in keyof T]?: T[P] }
+  ```
   3、Omit 指定删除泛型中的类型，保留其他类型
-  ` const Person = { name:string age:number } //必须有年龄类型 const xiaoming : Omit<Person, 'name'> = {age: 12} //name 和 age 都不要了 const xiaofang : Omit<Person, 'name'|'age'> = {} `
+  ```
+  const Person = { name:string age:number }
+  //必须有年龄类型
+  const xiaoming : Omit<Person, 'name'> = {age: 12}
+  //name 和 age 都不要了
+  const xiaofang : Omit<Person, 'name'|'age'> = {}
+  ```
